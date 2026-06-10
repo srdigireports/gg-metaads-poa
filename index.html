@@ -1,0 +1,635 @@
+.comp-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.comp-status { display: flex; align-items: center; gap: 8px; }
+.badge { font-size: 11px; font-weight: 700; letter-spacing: .5px; padding: 4px 12px; border-radius: 20px; }
+.badge.none { background: rgba(46,204,113,0.15); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+.badge.active { background: rgba(231,76,60,0.15); color: var(--red); border: 1px solid rgba(231,76,60,0.3); }
+.chevron { color: var(--muted); transition: transform .3s; font-size: 18px; }
+.comp-card.open .chevron { transform: rotate(180deg); }
+.comp-body { display: none; padding: 0 28px 28px; }
+.comp-card.open .comp-body { display: block; }
+.comp-body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 4px; }
+.comp-fact h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+.comp-fact p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.comp-gap { grid-column: 1 / -1; background: rgba(0,184,160,0.06); border: 1px solid rgba(0,184,160,0.2); border-radius: 8px; padding: 16px 20px; }
+.comp-gap h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.comp-gap p { font-size: 13px; color: var(--text); }
+
+/* ── CAMPAIGN STRUCTURE ── */
+.funnel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+.funnel-layer { border-radius: var(--radius); padding: 28px; text-align: center; position: relative; overflow: hidden; }
+.funnel-layer.tof { background: linear-gradient(135deg, rgba(27,79,158,0.25), rgba(27,79,158,0.1)); border: 1px solid rgba(27,79,158,0.4); }
+.funnel-layer.mof { background: linear-gradient(135deg, rgba(232,93,4,0.2), rgba(232,93,4,0.08)); border: 1px solid rgba(232,93,4,0.35); }
+.funnel-layer.bof { background: linear-gradient(135deg, rgba(46,204,113,0.18), rgba(46,204,113,0.06)); border: 1px solid rgba(46,204,113,0.35); }
+.funnel-layer .f-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.funnel-layer.tof .f-label { color: #6EB5FF; }
+.funnel-layer.mof .f-label { color: var(--orange-glow); }
+.funnel-layer.bof .f-label { color: var(--green); }
+.funnel-layer .f-name { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+.funnel-layer .f-budget { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 1px; }
+.funnel-layer.tof .f-budget { color: #6EB5FF; }
+.funnel-layer.mof .f-budget { color: var(--orange); }
+.funnel-layer.bof .f-budget { color: var(--green); }
+.funnel-layer .f-pct { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.funnel-layer .f-desc { font-size: 13px; color: var(--muted); margin-top: 16px; line-height: 1.6; }
+
+/* ── BUDGET BARS ── */
+.budget-viz { display: grid; gap: 16px; }
+.budget-row { display: flex; align-items: center; gap: 16px; }
+.budget-row-label { font-size: 13px; font-weight: 600; color: var(--text); min-width: 220px; }
+.budget-bar-wrap { flex: 1; height: 36px; background: rgba(255,255,255,0.05); border-radius: 6px; overflow: hidden; position: relative; }
+.budget-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 16px; font-size: 12px; font-weight: 700; color: var(--white); transition: width 1.2s cubic-bezier(.4,0,.2,1); width: 0; }
+.budget-bar.tof { background: linear-gradient(90deg, #1B4F9E, #2E75D4); }
+.budget-bar.rtg { background: linear-gradient(90deg, var(--orange), var(--orange-glow)); }
+.budget-bar.tst { background: linear-gradient(90deg, #00B8A0, #00D4BF); }
+.budget-row-amt { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--white); min-width: 80px; text-align: right; }
+
+/* ── CREATIVES ── */
+.creative-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.creative-tab {
+  font-size: 12px; font-weight: 700; letter-spacing: .5px; padding: 8px 20px; border-radius: 24px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all .2s;
+}
+.creative-tab:hover { border-color: rgba(232,93,4,0.4); color: var(--text); }
+.creative-tab.active { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.creative-panel { display: none; }
+.creative-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.creative-block { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+.creative-block h4 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+.creative-block p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.creative-copy {
+  grid-column: 1 / -1;
+  background: rgba(232,93,4,0.06); border: 1px solid rgba(232,93,4,0.2); border-radius: var(--radius); padding: 24px;
+  font-size: 14px; color: var(--text); line-height: 1.8; font-style: italic;
+}
+.creative-copy strong { color: var(--white); font-style: normal; display: block; margin-bottom: 8px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); }
+.cta-pill { display: inline-block; background: var(--orange); color: var(--white); font-size: 12px; font-weight: 700; padding: 6px 18px; border-radius: 20px; margin-top: 12px; letter-spacing: .5px; }
+.format-pill { display: inline-block; background: rgba(27,79,158,0.25); color: #6EB5FF; border: 1px solid rgba(27,79,158,0.4); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; letter-spacing: .5px; }
+
+/* ── BENCHMARKS ── */
+.bench-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.bench-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; }
+.bench-card .metric { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--white); letter-spacing: 1px; line-height: 1; }
+.bench-card .metric span { color: var(--orange); }
+.bench-card .m-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.bench-card .m-context { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.bench-card .m-target { font-size: 12px; font-weight: 600; color: var(--teal); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 40px; }
+.timeline::before { content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--blue), var(--orange), var(--green)); }
+.tl-item { position: relative; margin-bottom: 40px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -32px; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--orange); background: var(--navy);
+  transition: background .3s;
+}
+.tl-item:hover::before { background: var(--orange); }
+.tl-week { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.tl-title { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.tl-tasks { list-style: none; }
+.tl-tasks li { font-size: 13px; color: var(--muted); padding: 4px 0; padding-left: 16px; position: relative; line-height: 1.6; }
+.tl-tasks li::before { content: '→'; position: absolute; left: 0; color: var(--orange); }
+
+/* ── KPI TABLE ── */
+.kpi-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+.kpi-table th { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 8px 16px; text-align: left; }
+.kpi-table td { font-size: 13px; padding: 14px 16px; background: var(--navy-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.kpi-table td:first-child { border-left: 1px solid var(--border); border-radius: var(--radius) 0 0 var(--radius); font-weight: 600; color: var(--white); }
+.kpi-table td:last-child { border-right: 1px solid var(--border); border-radius: 0 var(--radius) var(--radius) 0; }
+.kpi-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.kpi-dot.green { background: var(--green); }
+.kpi-dot.amber { background: var(--amber); }
+.kpi-dot.red { background: var(--red); }
+
+/* ── RISK ── */
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.risk-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+.risk-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.risk-prob { font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; }
+.risk-prob.low { background: rgba(46,204,113,0.15); color: var(--green); }
+.risk-prob.med { background: rgba(246,195,68,0.15); color: var(--amber); }
+.risk-prob.high { background: rgba(231,76,60,0.15); color: var(--red); }
+.risk-card h3 { font-size: 15px; font-weight: 700; color: var(--white); }
+.risk-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.risk-mitigation { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.risk-mitigation h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.risk-mitigation p { font-size: 13px; color: var(--text); }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 60px 40px;
+  border-top: 1px solid var(--border);
+  background: var(--navy-card);
+}
+footer .f-logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; color: var(--white); margin-bottom: 8px; }
+footer .f-logo span { color: var(--orange); }
+footer p { font-size: 13px; color: var(--muted); }
+footer .f-meta { margin-top: 24px; display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+footer .f-meta span { font-size: 12px; color: var(--muted); }
+footer .f-meta span strong { color: var(--text); }
+
+/* ── ANIMATIONS ── */
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
+@keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SCROLL PROGRESS ── */
+#progress-bar { position: fixed; top: 64px; left: 0; height: 2px; background: var(--orange); z-index: 99; transition: width .1s; box-shadow: 0 0 8px rgba(232,93,4,0.6); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  section { padding: 70px 20px; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-stats { gap: 24px; padding: 24px 20px; }
+  .funnel { grid-template-columns: 1fr; }
+  .creative-panel.active { grid-template-columns: 1fr; }
+  .creative-copy { grid-column: 1; }
+  .comp-body-grid { grid-template-columns: 1fr; }
+  .bench-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <div class="nav-logo">GRID<span>GARAGE</span></div>
+  <ul class="nav-links">
+    <li><a href="#summary">Overview</a></li>
+    <li><a href="#competitors">Competitors</a></li>
+    <li><a href="#strategy">Strategy</a></li>
+    <li><a href="#creatives">Creatives</a></li>
+    <li><a href="#budget">Budget</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#kpis">KPIs</a></li>
+  </ul>
+  <div class="nav-badge">Meta Ads POA 2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">90-Day Blueprint · First-Mover Advantage</div>
+    <h1>META ADS<br><span>PLAN OF</span><br>ACTION</h1>
+    <p>A data-driven, full-funnel Meta Ads strategy built exclusively for Grid Garage Inc. — the premium modular garage flooring brand that removes the friction every competitor creates.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">$<span>2K</span></div><div class="label">Monthly Budget</div></div>
+      <div class="hero-stat"><div class="num"><span>4</span>/5</div><div class="label">Competitors Off Meta</div></div>
+      <div class="hero-stat"><div class="num"><span>90</span></div><div class="label">Day Roadmap</div></div>
+      <div class="hero-stat"><div class="num"><span>3</span>x</div><div class="label">Target ROAS (M3)</div></div>
+      <div class="hero-stat"><div class="num"><span>5</span></div><div class="label">Launch Creatives</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EXEC SUMMARY -->
+<section id="summary">
+  <div class="section-eyebrow">Section 01</div>
+  <h2 class="section-title">Why Meta.<br>Why Now.</h2>
+  <p class="section-sub">Four of five direct competitors have zero Meta presence. The one that does uses low-quality static catalogue ads with no transformation narrative. Grid Garage enters with first-mover advantage, a visually compelling product, and a superior kit-based value proposition.</p>
+  <div class="exec-grid fade-up">
+    <div class="exec-card highlight">
+      <div class="icon">🏆</div>
+      <h3>First-Mover Advantage</h3>
+      <p>4 of 5 competitors are completely absent from Meta. Grid Garage can own the category audience before a single competitor wakes up to the opportunity.</p>
+    </div>
+    <div class="exec-card">
+      <div class="icon">👁</div>
+      <h3>Visual Product = Meta Wins</h3>
+      <p>Before/after garage transformations, timelapse installs, and aspirational lifestyle content are exactly what Meta's algorithm rewards. This product was made for this platform.</p>
+    </div>
+    <div class="exec-card">
+      <div class="icon">🚫</div>
+      <h3>Google Is Unavailable</h3>
+      <p>With Google Ads and GMC both suspended, Meta isn't just the best channel — it's the only channel. The full $2,000/month must work as hard as possible here.</p>
+    </div>
+    <div class="exec-card">
+      <div class="icon">📈</div>
+      <h3>Pixel Data Compounds</h3>
+      <p>Every week of early Pixel activity builds audience intelligence competitors cannot buy later. Getting in now means Grid Garage's algorithm will be months ahead.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPETITORS -->
+<section id="competitors">
+  <div class="section-eyebrow">Section 02</div>
+  <h2 class="section-title">Competitor<br>Intelligence</h2>
+  <p class="section-sub">A full audit of all five direct competitors across Meta and Google. Click each to expand the full analysis.</p>
+  <div class="comp-grid fade-up">
+
+    <div class="comp-card" onclick="toggleComp(this)">
+      <div class="comp-header">
+        <div class="comp-left">
+          <span class="comp-rank">01</span>
+          <div><div class="comp-name">InterlockingProducts.com</div><div class="comp-meta">Most direct competitor · ~5,000 monthly visitors</div></div>
+        </div>
+        <div class="comp-status"><span class="badge none">No Meta Ads</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-body-grid">
+          <div class="comp-fact"><h4>Meta Presence</h4><p>Zero. Facebook page exists but organically dormant. No paid amplification detected in Meta Ad Library as of June 2026.</p></div>
+          <div class="comp-fact"><h4>Google Ads Spend</h4><p>~$6,000/month estimated. Runs non-brand and branded search. Heavy reliance on intent capture only.</p></div>
+          <div class="comp-fact"><h4>Strength</h4><p>Established Google presence. Floor designer tool reduces buying friction. Strong product reviews.</p></div>
+          <div class="comp-fact"><h4>Weakness</h4><p>Zero social presence. Sells individual tiles — customer must calculate quantities. No kit model.</p></div>
+          <div class="comp-gap"><h4>Grid Garage Opportunity</h4><p>Own Meta entirely. Reach the homeowner on Instagram before they ever search Google. The kit model removes the calculator friction their floor designer tries to solve — one step better.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-card" onclick="toggleComp(this)">
+      <div class="comp-header">
+        <div class="comp-left">
+          <span class="comp-rank">02</span>
+          <div><div class="comp-name">ModuTile.com</div><div class="comp-meta">Established brand · Broad product range</div></div>
+        </div>
+        <div class="comp-status"><span class="badge none">No Meta Ads</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-body-grid">
+          <div class="comp-fact"><h4>Meta Presence</h4><p>Facebook and Instagram pages exist but paid advertising is absent. Last organic post was 3+ months ago.</p></div>
+          <div class="comp-fact"><h4>Google Ads Spend</h4><p>~$2,000–$3,500/month estimated. Primary traffic driver is organic SEO, not paid.</p></div>
+          <div class="comp-fact"><h4>Strength</h4><p>Established brand. Diverse range. Strong Amazon presence. High review volume.</p></div>
+          <div class="comp-fact"><h4>Weakness</h4><p>Dated website UX. No visualiser. No kit model. Creative is cold and technical — no emotional hook.</p></div>
+          <div class="comp-gap"><h4>Grid Garage Opportunity</h4><p>Kit-based model is a cleaner buying experience. Aspirational transformation content will outperform any technical spec ad ModuTile could produce on Meta.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-card" onclick="toggleComp(this)">
+      <div class="comp-header">
+        <div class="comp-left">
+          <span class="comp-rank">03</span>
+          <div><div class="comp-name">SupraTile.com</div><div class="comp-meta">Commercial/industrial focus · Weak residential</div></div>
+        </div>
+        <div class="comp-status"><span class="badge none">No Meta Ads</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-body-grid">
+          <div class="comp-fact"><h4>Meta Presence</h4><p>None. B2B and commercial focus means budget goes into trade publications, not consumer social.</p></div>
+          <div class="comp-fact"><h4>Google Ads Spend</h4><p>~$500–$1,500/month on residential keywords. Primary revenue is commercial contracts, not DTC.</p></div>
+          <div class="comp-fact"><h4>Strength</h4><p>Strong commercial credibility. Durable product reputation. Trade relationships.</p></div>
+          <div class="comp-fact"><h4>Weakness</h4><p>No residential consumer presence. Commercial positioning creates confusion for homeowners.</p></div>
+          <div class="comp-gap"><h4>Grid Garage Opportunity</h4><p>Not a real competitor in the residential Meta space. Any Grid Garage ad reaching a homeowner is reaching an audience SupraTile has never tried to cultivate.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-card" onclick="toggleComp(this)">
+      <div class="comp-header">
+        <div class="comp-left">
+          <span class="comp-rank">04</span>
+          <div><div class="comp-name">DeckODIY.com</div><div class="comp-meta">Australian brand · Building US presence</div></div>
+        </div>
+        <div class="comp-status"><span class="badge none">No US Meta Ads</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-body-grid">
+          <div class="comp-fact"><h4>Meta Presence</h4><p>Zero in US market. Australian Meta ads detected but no US targeting. Garage tiles are one SKU among many.</p></div>
+          <div class="comp-fact"><h4>Google Ads Spend</h4><p>Under $1,000/month in US. Still establishing US search presence. Primarily organic.</p></div>
+          <div class="comp-fact"><h4>Strength</h4><p>Broad DIY catalogue creates cross-sell potential. Growing US brand awareness through content.</p></div>
+          <div class="comp-fact"><h4>Weakness</h4><p>Garage tiles are not their core product — they are an afterthought. No specialist positioning or kit model.</p></div>
+          <div class="comp-gap"><h4>Grid Garage Opportunity</h4><p>A specialist with a clear transformation message will always beat a generalist on Meta in a niche category.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp-card" onclick="toggleComp(this)">
+      <div class="comp-header">
+        <div class="comp-left">
+          <span class="comp-rank">05</span>
+          <div><div class="comp-name">Fastlifeproducts.com</div><div class="comp-meta">Only active Meta advertiser · Multi-platform</div></div>
+        </div>
+        <div class="comp-status"><span class="badge active">Active on Meta</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="comp-body">
+        <div class="comp-body-grid">
+          <div class="comp-fact"><h4>Meta Presence</h4><p>ACTIVE but weak. Occasional boosted posts and product ads. Primarily static product shots — no transformation content. No before/after format. No creative diversity.</p></div>
+          <div class="comp-fact"><h4>Google Ads Spend</h4><p>~$3,000–$5,000/month. Covers Search, Shopping, and Display across multiple product categories.</p></div>
+          <div class="comp-fact"><h4>Strength</h4><p>Multi-platform presence. Established Google Shopping feed. Broadest advertising footprint of the five.</p></div>
+          <div class="comp-fact"><h4>Weakness</h4><p>Catalogue-style Meta creative. Price-led ('from $X') rather than transformation-led. No specialist authority. Budget spread thin.</p></div>
+          <div class="comp-gap"><h4>Grid Garage Opportunity</h4><p>Superior creative quality wins this battle. Transformation video and kit-model messaging will generate dramatically higher engagement than static price ads.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAMPAIGN STRATEGY -->
+<section id="strategy">
+  <div class="section-eyebrow">Section 04</div>
+  <h2 class="section-title">Campaign<br>Architecture</h2>
+  <p class="section-sub">A 3-layer full-funnel structure designed to move buyers from unawareness through to purchase. All three layers launch simultaneously from Day 1.</p>
+  <div class="funnel fade-up">
+    <div class="funnel-layer tof">
+      <div class="f-label">Top of Funnel</div>
+      <div class="f-name">GG — Prospecting</div>
+      <div class="f-budget">$1,020</div>
+      <div class="f-pct">51% of budget · ~$34/day</div>
+      <div class="f-desc">Cold audience education and awareness. 2 ad sets: Homeowner Interests + Broad Algorithm. Feeds the Pixel with quality data.</div>
+    </div>
+    <div class="funnel-layer mof">
+      <div class="f-label">Mid + Bottom Funnel</div>
+      <div class="f-name">GG — Retargeting</div>
+      <div class="f-budget">$810</div>
+      <div class="f-pct">40% of budget · ~$27/day</div>
+      <div class="f-desc">Warm audiences (site visitors, video viewers) and hot audiences (ATC + checkout abandoners) in one combined retargeting campaign.</div>
+    </div>
+    <div class="funnel-layer bof">
+      <div class="f-label">Creative Testing</div>
+      <div class="f-name">GG — Testing</div>
+      <div class="f-budget">$170</div>
+      <div class="f-pct">9% of budget · ~$6/day</div>
+      <div class="f-desc">New creative concepts tested at low budget before scaling. Kill or promote within 72 hours based on CTR signal.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CREATIVES -->
+<section id="creatives">
+  <div class="section-eyebrow">Section 05</div>
+  <h2 class="section-title">Creative<br>Strategy</h2>
+  <p class="section-sub">5 launch creative concepts. Minimum 7–10 assets at launch. Video-first — this is a transformation product and Meta rewards it.</p>
+  <div class="creative-tabs">
+    <button class="creative-tab active" onclick="showCreative(0, this)">01 · 3-Hour Garage</button>
+    <button class="creative-tab" onclick="showCreative(1, this)">02 · Epoxy Mistake</button>
+    <button class="creative-tab" onclick="showCreative(2, this)">03 · Calculator Problem</button>
+    <button class="creative-tab" onclick="showCreative(3, this)">04 · Dream Garage</button>
+    <button class="creative-tab" onclick="showCreative(4, this)">05 · Real Customer UGC</button>
+  </div>
+
+  <div class="creative-panel active" id="c0">
+    <div class="creative-block"><span class="format-pill">Reels Video · 15–30s · 9:16 + 1:1</span><h4>Hook — First 3 Seconds</h4><p>Man staring at cracked, oil-stained garage floor. Looks at camera: <em>"I was about to spend $4,000 on epoxy. Then I found this."</em></p></div>
+    <div class="creative-block"><h4>Visual Direction</h4><p>Timelapse installation — unboxing the kit, tiles snapping together, car rolling in on finished floor. Text overlay: <em>"3 Hours. $1,699. No contractor. No epoxy. No mess."</em></p></div>
+    <div class="creative-copy"><strong>Ad Copy</strong>"Stop Living With Cracked Concrete<br><br>Your garage deserves better. Grid Garage's complete 2-car floor kit snaps together in under 3 hours — no glue, no tools, no contractors. Every kit includes tiles, edges, and free shipping. One price. No surprises.<br><br>✅ Holds 60,000 lbs  ✅ Won't peel, chip, or yellow  ✅ Install it this weekend"<br><span class="cta-pill">Shop 2-Car Kit — $1,699 →</span></div>
+  </div>
+
+  <div class="creative-panel" id="c1">
+    <div class="creative-block"><span class="format-pill">Video · 20–25s · 9:16 + 1:1</span><h4>Hook — First 3 Seconds</h4><p>Extreme close-up of peeling, yellowing epoxy. Text: <em>"Why does everyone keep making the same $4,000 mistake?"</em></p></div>
+    <div class="creative-block"><h4>Visual Direction</h4><p>Split screen. Left: epoxy installation + peeling 2 years later. Right: Grid Garage snap, snap, snap, done. Voiceover: <em>"Epoxy peels. It yellows. It costs twice as much. There's a better way."</em></p></div>
+    <div class="creative-copy"><strong>Ad Copy</strong>"Epoxy Peels. This Doesn't.<br><br>Every year, thousands of homeowners spend $3,000–$7,000 on epoxy garage floors — only to watch them peel, yellow, and stain within 2–3 years.<br><br>Grid Garage's interlocking tile kits cost less, install in hours, and are backed by a 20-year warranty. No peeling. No yellowing. No regrets."<br><span class="cta-pill">Learn More / Shop the Kit →</span></div>
+  </div>
+
+  <div class="creative-panel" id="c2">
+    <div class="creative-block"><span class="format-pill">Short Video / Motion Graphic · 15s · 1:1 + 9:16</span><h4>Hook — First 3 Seconds</h4><p>Hand punching numbers into a calculator. Text overlay: <em>"Other brands make you calculate how many tiles you need. We just sent you a garage."</em></p></div>
+    <div class="creative-block"><h4>Visual Direction</h4><p>Quick cut: (1) Competitor website with calculator, confused user. (2) Grid Garage — one click, kit in cart, done. (3) Kit arriving, being installed. Clean motion graphic style. Punchy and humorous.</p></div>
+    <div class="creative-copy"><strong>Ad Copy</strong>"Stop Doing Flooring Math<br><br>Every other garage tile company makes you calculate square footage, order tiles separately from edges, and figure out the layout yourself.<br><br>Grid Garage sends you a complete kit. Pre-sized for your 2-car or 3-car garage. Tiles, edges, and instructions — everything included at one flat price with free shipping.<br><br>No calculator. No confusion. Just your new garage."<br><span class="cta-pill">Shop Complete Kits →</span></div>
+  </div>
+
+  <div class="creative-panel" id="c3">
+    <div class="creative-block"><span class="format-pill">Carousel · 5 Cards · 1080×1080px · Feed</span><h4>Card Structure</h4><p>Card 1: Hero lifestyle shot — showroom garage. Card 2: Tile surface close-up, 60K lb claim. Card 3: Before/After split. Card 4: Kit unboxing flat lay. Card 5: Colour options grid — 22 colours.</p></div>
+    <div class="creative-block"><h4>Hook — Card 1</h4><p>Hero lifestyle shot: perfect garage, black/grey tiles, clean sports car, organised slatwall. Headline: <em>"What does your garage say about you?"</em></p></div>
+    <div class="creative-copy"><strong>Ad Copy (Card 1)</strong>"Your garage is the first thing you see when you come home. Grid Garage's complete interlocking floor kits transform it from an embarrassment into a showroom — in one afternoon, for less than the cost of epoxy.<br><br>5 tile systems. 22 colours. Free shipping nationwide."<br><span class="cta-pill">See All Kits →</span></div>
+  </div>
+
+  <div class="creative-panel" id="c4">
+    <div class="creative-block"><span class="format-pill">UGC Video · 20–40s · 9:16 · Native Style</span><h4>Hook — First 3 Seconds</h4><p>Phone-filmed close-up of tiles snapping together. Real voice: <em>"I've been putting this off for two years. Finished it in one afternoon."</em></p></div>
+    <div class="creative-block"><h4>Visual Direction</h4><p>Real customer (or content creator in customer style): (1) The garage before — honest and messy. (2) Kit arriving. (3) Casual installation footage. (4) Final wide reveal with car. No studio lighting. Authenticity is the asset.</p></div>
+    <div class="creative-copy"><strong>Ad Copy</strong>"I Wish I'd Done This Years Ago<br><br>'I kept looking at my garage floor every single day thinking I need to do something about this. Finally ordered a Grid Garage kit. Took me 3 hours, my kid helped me. The floor looks absolutely insane. I can't stop showing people.'<br><br>Shop the same kit: FREE shipping, 30-day guarantee, 20-year warranty."<br><span class="cta-pill">Shop [Customer's Kit] →</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BUDGET -->
+<section id="budget">
+  <div class="section-eyebrow">Section 07</div>
+  <h2 class="section-title">Budget<br>Allocation</h2>
+  <p class="section-sub">$2,000/month across 3 campaigns and 5 ad sets. Structured to maximise Pixel data collection in Month 1 while maintaining full-funnel coverage from Day 1.</p>
+  <div class="budget-viz fade-up">
+    <div class="budget-row">
+      <div class="budget-row-label">TOF — Prospecting (51%)</div>
+      <div class="budget-bar-wrap"><div class="budget-bar tof" data-width="51">$1,020/mo · ~$34/day</div></div>
+      <div class="budget-row-amt">$1,020</div>
+    </div>
+    <div class="budget-row">
+      <div class="budget-row-label">Retargeting MOF+BOF (40%)</div>
+      <div class="budget-bar-wrap"><div class="budget-bar rtg" data-width="40">$810/mo · ~$27/day</div></div>
+      <div class="budget-row-amt">$810</div>
+    </div>
+    <div class="budget-row">
+      <div class="budget-row-label">Creative Testing (9%)</div>
+      <div class="budget-bar-wrap"><div class="budget-bar tst" data-width="9">$170/mo</div></div>
+      <div class="budget-row-amt">$170</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BENCHMARKS -->
+<section id="benchmarks">
+  <div class="section-eyebrow">Section 06</div>
+  <h2 class="section-title">Benchmarks<br>& Goals</h2>
+  <p class="section-sub">Industry data from Triple Whale (1,247 ad accounts, $87M spend), MHI Media, and Visible Factors 2026 analysis. Home & Garden category specific.</p>
+  <div class="bench-grid fade-up">
+    <div class="bench-card"><div class="metric"><span>2.0</span>%</div><div class="m-label">CTR Target M1</div><div class="m-context">H&G avg: 1.9–2.2%</div><div class="m-target">↑ 2.5%+ in M2</div></div>
+    <div class="bench-card"><div class="metric">$<span>1.50</span></div><div class="m-label">CPC Target</div><div class="m-context">Home Imprv avg: $2.93</div><div class="m-target">Target: under $1.50 M2</div></div>
+    <div class="bench-card"><div class="metric"><span>35</span>%</div><div class="m-label">ThruPlay Rate</div><div class="m-context">Avg: 20–30% for video</div><div class="m-target">Key signal quality indicator</div></div>
+    <div class="bench-card"><div class="metric"><span>1.5</span>x</div><div class="m-label">ROAS M1 Target</div><div class="m-context">H&G median: 2.18x</div><div class="m-target">Target 3.5x+ by M3</div></div>
+    <div class="bench-card"><div class="metric"><span>1.5</span>%</div><div class="m-label">CVR Acceptable</div><div class="m-context">Learning phase floor</div><div class="m-target">2.5%+ = excellent</div></div>
+    <div class="bench-card"><div class="metric">$<span>250</span></div><div class="m-label">CPA Acceptable M1</div><div class="m-context">AOV: $1,699–$2,350</div><div class="m-target">= 6.8x ROAS on min AOV</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-eyebrow">Section 08</div>
+  <h2 class="section-title">60-Day<br>Roadmap</h2>
+  <p class="section-sub">Week-by-week execution plan from pre-launch through to Month 2 scale. Weekly client calls throughout the first 60 days.</p>
+  <div class="timeline fade-up">
+    <div class="tl-item">
+      <div class="tl-week">Pre-Launch Week 0</div>
+      <div class="tl-title">Foundation — Before a Dollar Is Spent</div>
+      <ul class="tl-tasks">
+        <li>Full Pixel audit via Meta Pixel Helper — verify all 4 standard events fire correctly</li>
+        <li>Confirm Conversions API is live for server-side tracking redundancy</li>
+        <li>Finalise and upload all 7–10 launch creatives with UTM parameters</li>
+        <li>Build all 3 campaigns in Ads Manager — do NOT activate MOF/BOF yet</li>
+        <li>Client alignment call: budget sign-off, creative approvals, LP decision</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Week 1</div>
+      <div class="tl-title">Launch — TOF Goes Live</div>
+      <ul class="tl-tasks">
+        <li>Launch TOF Prospecting only — 2 ad sets, all creatives running, $67/day total</li>
+        <li>Monitor for ad approvals, policy flags, and Pixel event quality daily</li>
+        <li>Day 5–7: Activate Retargeting campaign once ViewContent hits 200+ events</li>
+        <li>First weekly call — review early CTR and creative signals</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Week 2</div>
+      <div class="tl-title">First Optimisation Pass</div>
+      <ul class="tl-tasks">
+        <li>Pause any ad with CTR below 0.8% after 1,000+ impressions</li>
+        <li>Double budget allocation toward creatives with CTR above 2.0%</li>
+        <li>Brief Round 2 creatives based on Week 1 winning angles</li>
+        <li>Activate BOF ad set within Retargeting if ATC events exceed 20+</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Weeks 3–4</div>
+      <div class="tl-title">Learning Phase Completion</div>
+      <ul class="tl-tasks">
+        <li>Test shifting TOF objective to ATC conversion if 50+ events recorded</li>
+        <li>Round 2 creatives enter rotation — maintain 5+ active ads per ad set</li>
+        <li>Monitor frequency closely — introduce new creative if any ad set hits 3.0+</li>
+        <li>End-of-Month 1 full report delivered to client before call</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Weeks 5–6</div>
+      <div class="tl-title">Scale Winners</div>
+      <ul class="tl-tasks">
+        <li>Identify top 2 creatives. Increase budget allocation by 20%</li>
+        <li>Build LAL 1% audience once custom audience reaches 1,000+ users</li>
+        <li>Begin planning cabinet-focused creative set for Month 2 introduction</li>
+        <li>Landing page review — if site CVR below 0.8%, escalate LP creation</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-week">Weeks 7–8</div>
+      <div class="tl-title">Month 2 Expansion</div>
+      <ul class="tl-tasks">
+        <li>Launch cabinet ad set within TOF campaign (10–15% of TOF budget)</li>
+        <li>Full funnel attribution review in GA4 — confirm Meta-to-purchase path</li>
+        <li>Month 2 report. ROAS target: 1.5–2.0x. Propose budget increase if hitting target</li>
+        <li>Test 2% and 3% LAL audiences for volume expansion</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- KPIs -->
+<section id="kpis">
+  <div class="section-eyebrow">Section 09</div>
+  <h2 class="section-title">Success<br>Metrics & KPIs</h2>
+  <p class="section-sub">Green, amber, and red thresholds for every key metric. Any red triggers immediate action — don't wait for the weekly call.</p>
+  <div class="fade-up" style="overflow-x:auto;">
+    <table class="kpi-table">
+      <tr><th>KPI</th><th><span class="kpi-dot green"></span>On Track</th><th><span class="kpi-dot amber"></span>Monitor</th><th><span class="kpi-dot red"></span>Act Now</th></tr>
+      <tr><td>CTR (blended)</td><td>2.0%+</td><td>1.2–2.0%</td><td>Below 1.2% — creative review immediately</td></tr>
+      <tr><td>CPM (US)</td><td>$14–18</td><td>$18–22</td><td>Above $22 — audience fatigue or bidding issue</td></tr>
+      <tr><td>CPC</td><td>Below $1.50</td><td>$1.50–$2.50</td><td>Above $2.50 — creative or audience issue</td></tr>
+      <tr><td>Video ThruPlay Rate</td><td>35%+</td><td>20–35%</td><td>Below 20% — hook is not working</td></tr>
+      <tr><td>Add-to-Cart Rate (site)</td><td>2%+</td><td>1–2%</td><td>Below 1% — LP or offer issue</td></tr>
+      <tr><td>ROAS (Month 1)</td><td>1.5x+</td><td>1.0–1.5x</td><td>Below 1.0x — full strategy review</td></tr>
+      <tr><td>ROAS (Month 2+)</td><td>2.5x+</td><td>1.5–2.5x</td><td>Below 1.5x — budget reallocation required</td></tr>
+      <tr><td>Ad Frequency</td><td>1.5–2.5</td><td>2.5–3.5</td><td>Above 3.5 — immediate creative refresh</td></tr>
+      <tr><td>Weekly Spend Pacing</td><td>$450–$500/wk</td><td>$400–$450</td><td>Below $400 or above $535 — pacing issue</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RISKS -->
+<section id="risks">
+  <div class="section-eyebrow">Section 10</div>
+  <h2 class="section-title">Risk<br>Mitigation</h2>
+  <p class="section-sub">Identified risks with probability ratings and specific mitigation strategies for each.</p>
+  <div class="risk-grid fade-up">
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob med">Medium Risk</span><h3>Creative Underperformance</h3></div>
+      <p>Ads don't achieve 1.5% CTR, restricting algorithm learning and wasting budget during critical learning phase.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Launch 7–10 diverse creatives. Kill non-performers fast. Brief new creatives every 2 weeks. Creative quality is the #1 risk factor at this budget level.</p></div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob low">Low Risk</span><h3>Ad Account Policy Flags</h3></div>
+      <p>Meta ad account rejection or policy violations that disrupt campaign continuity and waste setup time.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Pre-approve all creatives through internal review before launch. Avoid superlative claims. No before/after imagery that implies unrealistic results.</p></div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob med">Medium Risk</span><h3>Insufficient Pixel Data</h3></div>
+      <p>Delays shift from Traffic to Conversion optimisation if 50+ ATC events aren't reached in time.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Run Traffic campaigns in Month 1 to feed the Pixel. Do not rush to conversion optimisation before 50+ ATC events.</p></div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob low">Low Risk</span><h3>iOS Attribution Gaps</h3></div>
+      <p>iOS signal loss potentially undercounting Meta conversions and making ROAS appear lower than actual.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Implement CAPI (Conversions API) — eliminates 60–70% of iOS signal loss. Confirm CAPI is live pre-launch.</p></div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob med">Medium Risk</span><h3>Budget Limits Testing Velocity</h3></div>
+      <p>$2,000/month slows the learning cycle compared to a larger budget, extending time to optimisation.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Prioritise creative diversity over audience diversity. With $2,000/month Meta budget, creative is the lever — not more audiences.</p></div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-header"><span class="risk-prob low">Low Risk</span><h3>Competitor Enters Meta</h3></div>
+      <p>A competitor launches Meta ads and increases CPM competition in the home improvement category.</p>
+      <div class="risk-mitigation"><h4>Mitigation</h4><p>Speed and creative quality are the moat. First-mover advantage compounds. Build audience data now that competitors cannot replicate.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">GRID<span>GARAGE</span></div>
+  <p>Meta Ads Plan of Action · 90-Day Blueprint · June–September 2026</p>
+  <div class="f-meta">
+    <span><strong>Budget</strong> $2,000/month Meta</span>
+    <span><strong>Platform</strong> Facebook + Instagram</span>
+    <span><strong>Prepared by</strong> Shamsher Singh</span>
+    <span><strong>Status</strong> Active — Phase 1</span>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+// Fade-up observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Budget bar animation
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.budget-bar').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.budget-viz').forEach(el => barObserver.observe(el));
+
+// Competitor toggle
+function toggleComp(el) {
+  el.classList.toggle('open');
+}
+
+// Creative tabs
+function showCreative(idx, btn) {
+  document.querySelectorAll('.creative-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.creative-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('c' + idx).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
