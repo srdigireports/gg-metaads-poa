@@ -1,3 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Garage — Meta Ads POA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:       #08111F;
+  --navy-card:  #0F1C2E;
+  --navy-mid:   #172843;
+  --blue:       #1B4F9E;
+  --orange:     #E85D04;
+  --orange-glow:#FF7B2B;
+  --teal:       #00B8A0;
+  --white:      #FFFFFF;
+  --off:        #EEF2F7;
+  --muted:      #8898AA;
+  --text:       #CBD5E0;
+  --green:      #2ECC71;
+  --amber:      #F6C344;
+  --red:        #E74C3C;
+  --border:     rgba(255,255,255,0.07);
+  --radius:     12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(8,17,31,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); }
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--orange); }
+.nav-badge { background: var(--orange); color: var(--white); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; position: relative; overflow: hidden;
+  padding: 120px 40px 80px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,93,4,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(27,79,158,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #08111F 0%, #0B1825 100%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(var(--orange) 1px, transparent 1px), linear-gradient(90deg, var(--orange) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(232,93,4,0.12); border: 1px solid rgba(232,93,4,0.3);
+  border-radius: 30px; padding: 6px 18px; margin-bottom: 32px;
+  font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--orange);
+}
+.hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: pulse 2s infinite; }
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 110px);
+  line-height: 0.95;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.hero h1 span { color: var(--orange); }
+.hero p { font-size: 18px; color: var(--muted); max-width: 580px; margin: 0 auto 48px; line-height: 1.8; }
+.hero-stats {
+  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+  padding: 32px 40px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.hero-stat { text-align: center; }
+.hero-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--white); letter-spacing: 1px; line-height: 1; }
+.hero-stat .num span { color: var(--orange); }
+.hero-stat .label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+/* ── SECTIONS ── */
+section { padding: 100px 40px; max-width: 1140px; margin: 0 auto; }
+.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 60px); color: var(--white); letter-spacing: 1px; line-height: 1.05; margin-bottom: 20px; }
+.section-sub { font-size: 17px; color: var(--muted); max-width: 660px; margin-bottom: 60px; line-height: 1.8; }
+.divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: border-color .3s, transform .3s;
+}
+.card:hover { border-color: rgba(232,93,4,0.35); transform: translateY(-3px); }
+
+/* ── EXEC SUMMARY ── */
+.exec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.exec-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+.exec-card .icon { font-size: 28px; margin-bottom: 16px; }
+.exec-card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+.exec-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.exec-card.highlight { border-color: rgba(232,93,4,0.4); background: linear-gradient(135deg, rgba(232,93,4,0.08), var(--navy-card)); }
+
+/* ── COMPETITORS ── */
+.comp-grid { display: grid; gap: 16px; }
+.comp-card {
+  background: var(--navy-card); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; cursor: pointer;
+}
+.comp-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 28px;
+  transition: background .2s;
+}
+.comp-header:hover { background: rgba(255,255,255,0.03); }
+.comp-left { display: flex; align-items: center; gap: 16px; }
+.comp-rank { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--orange); background: rgba(232,93,4,0.12); border: 1px solid rgba(232,93,4,0.2); border-radius: 6px; padding: 4px 10px; }
+.comp-name { font-size: 16px; font-weight: 700; color: var(--white); }
 .comp-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .comp-status { display: flex; align-items: center; gap: 8px; }
 .badge { font-size: 11px; font-weight: 700; letter-spacing: .5px; padding: 4px 12px; border-radius: 20px; }
